@@ -1,0 +1,32 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+from sklearn.preprocessing import StandardScaler
+
+# 1. Coleta de dados
+dados = pd.read_csv('dados.csv')
+
+# 2. Pré-processamento de dados
+# (suponha que não seja necessário para este exemplo)
+
+# 3. Divisão dos dados em conjuntos de treinamento e teste
+X = dados.drop('alvo', axis=1)  # Features
+y = dados['alvo']  # Variável alvo
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 4. Escolha do algoritmo de machine learning e treinamento do modelo
+modelo = LinearRegression()
+modelo.fit(X_train, y_train)
+
+# 5. Avaliação do desempenho do modelo
+y_pred = modelo.predict(X_test)
+
+r2 = r2_score(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
+
+print("Coeficiente de determinação (R²):", r2)
+print("Erro médio quadrático (MSE):", mse)
+print("Erro médio absoluto (MAE):", mae)
